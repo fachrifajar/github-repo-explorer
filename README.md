@@ -1,54 +1,65 @@
-# React + TypeScript + Vite
+# GitHub Repo Explorer
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based application to explore GitHub repositories with infinite scrolling, caching, and real-time updates.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Infinite Scrolling**: Seamlessly fetch and display GitHub repositories.
+- **Caching**: Optimized API calls using React Query for better performance.
+- **Material-UI Integration**: Beautiful and responsive UI components.
+- **State Management**: Redux Toolkit for predictable state management.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Frontend**: React, Material-UI
+- **State Management**: Redux Toolkit
+- **API Management**: React Query
+- **HTTP Client**: Axios
+- **Build Tool**: Vite
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+## Installation
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/fachrifajar/github-repo-explorer.git
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+2. Navigate to the project dir:
+   ```bash
+   cd github-repo-explorer
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+3. Install dependencies:
+   ```bash
+   npm i 
+
+4. Run the development server:
+   ```bash
+   npm run dev
+
+## Scripts
+
+- **dev**: Start the development server.
+- **build**: Build the project for production.
+- **lint**: Run ESLint to check code quality.
+- **preview**: Preview the production build.
+
+## Dependencies
+
+### Main
+
+- **@mui/material**: Material-UI components for styling.
+- **@reduxjs/toolkit**: Simplified Redux state management.
+- **@tanstack/react-query**: Powerful data fetching and caching.
+- **react-intersection-observer**: Handle infinite scrolling.
+- **axios**: Promise-based HTTP client.
+
+### Dev
+
+- **TypeScript**: Strongly typed JavaScript.
+- **ESLint**: Linting and code quality checks.
+- **Vite**: Fast development and build tool.
+
+## Usage
+
+1. Search for a GitHub user to view their repositories.
+2. Scroll to load more repositories dynamically.
+3. View detailed repository information, including stars and descriptions.
