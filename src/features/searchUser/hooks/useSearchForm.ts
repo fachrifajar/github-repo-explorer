@@ -1,5 +1,4 @@
 import { GetInfiniteUsername } from "../services/GetInfiniteUsername";
-import { GetDetailRepo } from "../services/GetDetailRepo";
 // redux
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
@@ -19,10 +18,6 @@ export const useSearchForm = () => {
     hasNextPage,
     refetch,
   } = GetInfiniteUsername();
-  const { queryResponseDetailRepo } = GetDetailRepo({
-    onSuccess: () => {},
-    onError: () => {},
-  });
 
   const dispatch = useDispatch();
 
@@ -67,6 +62,5 @@ export const useSearchForm = () => {
     handleChangeSearch,
     handleSearchKeyPress,
     handleSearchClick,
-    queryResponseDetailRepo,
   };
 };

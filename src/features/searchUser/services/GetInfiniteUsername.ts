@@ -18,7 +18,7 @@ export const GetInfiniteUsername = () => {
   } = useInfiniteQuery({
     queryKey: ["ghUsername", reduxData?.search?.q],
     queryFn: async ({ pageParam = 1 }) => {
-      const perPage = 5;
+      const perPage = 10;
       const res = await getGithubUser({
         q: reduxData?.search?.q,
         per_page: perPage,

@@ -9,9 +9,10 @@ import {
   Box,
   CircularProgress,
 } from "@mui/material";
-import { useState, useEffect } from "react";
+import { useMemo } from "react";
 import { useInView } from "react-intersection-observer";
 import { useSearchForm } from "../hooks/useSearchForm";
+import { useDetailRepo } from "../hooks/useDetailRepo";
 import {
   ChevronTopIcon,
   ChevronBottomIcon,
@@ -19,8 +20,6 @@ import {
   StarIcon,
 } from "../../../utils/icons";
 import { SkeletonCard } from "./SkeletonCard";
-import { useMemo } from "react";
-
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
@@ -34,41 +33,22 @@ export const CardResult = () => {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
-    queryResponseDetailRepo,
   } = useSearchForm();
+
+  const { queryResponseDetailRepo, handleExpandClick, expandedCard } =
+    useDetailRepo();
 
   const userData = useMemo(
     () => data?.pages.flatMap((page) => page.data) || [],
     [data]
   );
 
-  // State to manage expanded cards and repository data
-  const [expandedCard, setExpandedCard] = useState<Record<string, boolean>>({});
-
   const { ref, inView } = useInView();
 
   // Fetch the next page when the observer is in view
-  useEffect(() => {
-    if (inView && hasNextPage) {
-      fetchNextPage();
-    }
-  }, [inView, hasNextPage, fetchNextPage]);
-
-  // Reset expanded state and reposData when userData changes
-  useEffect(() => {
-    setExpandedCard({});
-  }, [userData]);
-
-  const handleExpandClick = async (key: string, reposUrl: string) => {
-    setExpandedCard((prev) => ({
-      ...prev,
-      [key]: !prev[key], // Toggle the specific card's expanded state
-    }));
-
-    await queryResponseDetailRepo?.mutateAsync({
-      url: reposUrl,
-    });
-  };
+  if (inView && hasNextPage) {
+    fetchNextPage();
+  }
 
   if (isFetching && !isFetchingNextPage) {
     return (
@@ -87,15 +67,15 @@ export const CardResult = () => {
   return (
     <Box
       sx={{
-        height: "50vh",
+        height: "70vh",
         overflowY: "auto",
         px: 2,
         mt: { xs: 5, sm: 5, md: 0 },
       }}
     >
-      {userData?.map((item, key) => (
+      {userData?.map((item) => (
         <Card
-          key={key}
+          key={item?.login}
           sx={{
             bgcolor: "custom.card",
             border: "1px solid",
@@ -112,15 +92,21 @@ export const CardResult = () => {
             }
             action={
               <IconButton
-                onClick={() =>
-                  handleExpandClick(key.toString(), item?.repos_url)
-                }
+                onClick={() => handleExpandClick(item?.login, item?.repos_url)}
               >
-                {expandedCard[key] ? <ChevronTopIcon /> : <ChevronBottomIcon />}
+                {expandedCard[item?.login] ? (
+                  <ChevronTopIcon />
+                ) : (
+                  <ChevronBottomIcon />
+                )}
               </IconButton>
             }
           />
-          <Collapse in={!!expandedCard[key]} timeout="auto" unmountOnExit>
+          <Collapse
+            in={!!expandedCard[item?.login]}
+            timeout="auto"
+            unmountOnExit
+          >
             <CardContent>
               {queryResponseDetailRepo?.isPending &&
               queryResponseDetailRepo?.variables?.url === item?.repos_url ? (
@@ -173,6 +159,11 @@ export const CardResult = () => {
                                   variant="body2"
                                   color="text.secondary"
                                   fontWeight={600}
+                                  sx={{
+                                    overflow: "hidden",
+                                    whiteSpace: "nowrap",
+                                    textOverflow: "ellipsis",
+                                  }}
                                 >
                                   {repo?.name}
                                 </Typography>
