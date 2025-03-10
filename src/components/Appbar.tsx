@@ -8,7 +8,6 @@ import { useThemeContext } from "../hooks/ThemeContext";
 
 export const Appbar: React.FC = () => {
   const { mode, toggleMode } = useThemeContext();
-  const theme = useTheme();
 
   return (
     <Box
@@ -21,6 +20,7 @@ export const Appbar: React.FC = () => {
         display: "flex",
         alignItems: "center",
         justifyContent: "space-between",
+        zIndex: 99999,
       }}
     >
       {/* Title Section */}
@@ -29,8 +29,6 @@ export const Appbar: React.FC = () => {
         fontWeight={800}
         sx={{
           backgroundClip: "text",
-          // textFillColor: "transparent",
-          // backgroundImage: `linear-gradient(to right, ${theme.palette.custom.contrastText}, ${theme.palette.custom.lightenText})`,
           lineHeight: 1.2,
         }}
       >
@@ -41,7 +39,7 @@ export const Appbar: React.FC = () => {
       <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
         {/* Theme Toggle */}
         <IconButton onClick={toggleMode}>
-          {mode === "light" ? <SunIcon /> : <MoonIcon />}
+          {mode === "light" ? <MoonIcon /> : <SunIcon />}
         </IconButton>
 
         {/* GitHub Link */}

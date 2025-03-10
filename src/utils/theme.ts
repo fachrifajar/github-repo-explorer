@@ -20,6 +20,8 @@ const theme = (mode: "light" | "dark") =>
               lightenText: "#14b8a6",
               icon: "#e8e6e3",
               light: "#07111c",
+              card: "#343a46",
+              border: "#343a46",
             },
             primary: {
               main: "#90caf9",
@@ -40,6 +42,8 @@ const theme = (mode: "light" | "dark") =>
               lightenText: "#14b8a6",
               icon: "#5f6368",
               light: "#FFFFFF",
+              card: "#fff",
+              border: "#D1D5DB",
             },
             primary: {
               main: "#1BA0E2",

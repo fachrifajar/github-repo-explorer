@@ -1,4 +1,10 @@
-import { Button as ButtonMui, Tooltip, CircularProgress } from "@mui/material";
+import {
+  Button as ButtonMui,
+  Tooltip,
+  CircularProgress,
+  Box,
+  useMediaQuery,
+} from "@mui/material";
 
 interface ButtonProps {
   label: string;
@@ -9,6 +15,7 @@ interface ButtonProps {
   loading?: boolean;
   sx?: object;
   tooltipText?: string;
+  fullWidth?: boolean;
 }
 
 export const Button = ({
@@ -19,7 +26,9 @@ export const Button = ({
   loading = false,
   sx,
   tooltipText = "This action is disabled",
+  fullWidth,
 }: ButtonProps) => {
+  const isXs = useMediaQuery("(max-width: 600px)");
   return (
     <Tooltip
       title={disabled ? tooltipText : ""}
@@ -31,17 +40,28 @@ export const Button = ({
         <ButtonMui
           variant={variant}
           onClick={onClick}
-          disabled={disabled}
+          disabled={loading ? true : disabled}
+          fullWidth={fullWidth || isXs ? true : false}
           sx={{
             textTransform: "none",
             color: ["outlined", "text"]?.includes(variant)
               ? "primary.main"
               : "custom.light",
             fontSize: { md: "16px", sm: "16px", xs: "14px" },
+            fontWeight: 600,
+            minHeight: "30px",
             ...sx,
           }}
         >
-          {loading ? <CircularProgress size={20} /> : label}
+          {loading ? (
+            <Box
+              sx={{ minHeight: "30px", display: "flex", alignItems: "center" }}
+            >
+              <CircularProgress size={18} color="inherit" />{" "}
+            </Box>
+          ) : (
+            label
+          )}
         </ButtonMui>
       </span>
     </Tooltip>

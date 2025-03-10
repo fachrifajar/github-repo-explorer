@@ -1,16 +1,24 @@
 import { TextField, useMediaQuery } from "@mui/material";
 
-interface InputFieldProps {
+interface InputFieldProps<T> {
   label?: string;
   fullWidth?: boolean;
   slotProps?: object;
+  value?: T;
+  loading?: boolean;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
-export const InputField = ({
+export const InputField = <T,>({
   label,
   fullWidth = true,
   slotProps,
-}: InputFieldProps) => {
+  loading,
+  value,
+  onChange,
+  onKeyDown,
+}: InputFieldProps<T>) => {
   const isXs = useMediaQuery("(max-width: 600px)");
   return (
     <TextField
@@ -18,6 +26,10 @@ export const InputField = ({
       label={label}
       size={isXs ? "small" : "medium"}
       slotProps={slotProps}
+      disabled={loading}
+      value={value}
+      onChange={onChange}
+      onKeyDown={onKeyDown}
       sx={{
         "& label": {
           color: "text.secondary",
@@ -29,18 +41,12 @@ export const InputField = ({
           color: "primary.main",
         },
         "& .MuiOutlinedInput-root": {
-          //   "& fieldset": {
-          //     borderColor: error && "error.main",
-          //   },
           "&.Mui-disabled": {
             "& input": {
               bgcolor: "custom.cardDark",
               cursor: "not-allowed",
               WebkitTextFillColor: "#8E919B",
             },
-            // "& fieldset": {
-            //   borderColor: error && "error.main",
-            // },
             "&:hover fieldset": {
               borderColor: "secondary",
             },
