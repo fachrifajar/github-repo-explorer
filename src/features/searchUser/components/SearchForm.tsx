@@ -9,6 +9,14 @@ import { useSearchForm } from "../hooks/useSearchForm";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../redux/store";
 
+type CustomError = Error & {
+  response?: {
+    data?: {
+      message?: string;
+    };
+  };
+};
+
 export const SearchForm = () => {
   const {
     isFetching,
@@ -56,7 +64,7 @@ export const SearchForm = () => {
 
       {error && (
         <Alert severity="error" sx={{ mt: 1 }}>
-          {error?.response?.data?.message ||
+          {(error as CustomError)?.response?.data?.message ||
             error.message ||
             "An unexpected error occurred. Please try again."}
         </Alert>

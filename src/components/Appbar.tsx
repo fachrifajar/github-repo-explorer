@@ -1,6 +1,6 @@
 import React from "react";
 // mui components
-import { Box, Typography, IconButton, useTheme } from "@mui/material";
+import { Box, Typography, IconButton } from "@mui/material";
 // icons
 import { MoonIcon, SunIcon, GitHubIcon } from "../utils/icons";
 // custom hooks
