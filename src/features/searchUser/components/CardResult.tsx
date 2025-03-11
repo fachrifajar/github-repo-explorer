@@ -107,7 +107,7 @@ export const CardResult = () => {
             timeout="auto"
             unmountOnExit
           >
-            <CardContent>
+            <CardContent sx={{ maxHeight: "50vh", overflowY: "auto" }}>
               {queryResponseDetailRepo?.isPending &&
               queryResponseDetailRepo?.variables?.url === item?.repos_url ? (
                 <Box sx={{ display: "flex", justifyContent: "center" }}>
